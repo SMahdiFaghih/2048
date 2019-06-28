@@ -43,6 +43,8 @@ public class Controller
 
     public void signUpMenu(Stage primaryStage) throws Exception
     {
+        rootSignUpMenu.getChildren().clear();
+
         TextField textFieldName = new TextField();
         TextField textFieldPassword = new TextField();
         nameAndPasswordFields(rootSignUpMenu, textFieldName, textFieldPassword);
@@ -112,6 +114,8 @@ public class Controller
 
     public void login(Stage primaryStage)
     {
+        rootLoginMenu.getChildren().clear();
+
         Label labelLogin = new Label("Login");
         rootLoginMenu.getChildren().add(labelLogin);
         labelLogin.relocate(150, 30);

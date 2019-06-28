@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -76,7 +77,15 @@ public class Controller
                 if (player == null)
                 {
                     rootSignUpMenu.getChildren().remove(labelInvalidInput);
-                    new Player(name, password);
+                    player = new Player(name, password);
+                    try
+                    {
+                        player.savePlayerInfo(player, name, true);
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
                     primaryStage.setScene(sceneLoginMenu);
                     primaryStage.centerOnScreen();
                     login(primaryStage);

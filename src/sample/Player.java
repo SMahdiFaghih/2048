@@ -1,5 +1,9 @@
 package sample;
 
+import com.google.gson.GsonBuilder;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -16,6 +20,29 @@ public class Player
         this.name = name;
         this.password = password;
         players.add(this);
+    }
+
+    public void savePlayerInfo(Player player, String name, boolean isNewAccount) throws IOException
+    {
+        FileWriter SavedAccountPath = new FileWriter("SavedAccounts/SavedAccountPath.txt" ,true);
+        if (isNewAccount)
+        {
+            SavedAccountPath.write(name + "\n");
+            SavedAccountPath.close();
+        }
+        String json = new GsonBuilder().setPrettyPrinting().create().toJson(player);
+        System.out.println(json);
+        try
+        {
+
+            FileWriter saveAccountInfo = new FileWriter("SavedAccounts/" + name + ".json", false);
+            saveAccountInfo.write(json);
+            saveAccountInfo.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public static void login(Player player)

@@ -1,4 +1,4 @@
-package sample;
+package GraphicAndLogic;
 
 import com.google.gson.Gson;
 import javafx.application.Application;

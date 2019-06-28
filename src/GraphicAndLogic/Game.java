@@ -1,4 +1,4 @@
-package sample;
+package GraphicAndLogic;
 
 import java.util.Random;
 

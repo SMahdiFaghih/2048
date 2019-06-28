@@ -1,4 +1,4 @@
-package sample;
+package GraphicAndLogic;
 
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;

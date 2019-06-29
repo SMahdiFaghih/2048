@@ -2,6 +2,7 @@ package GraphicAndLogic;
 
 import com.google.gson.Gson;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.json.simple.parser.JSONParser;
 
@@ -17,6 +18,8 @@ public class Main extends Application
     public void start(Stage primaryStage) throws Exception
     {
         convertJSONToPlayers();
+        Image iconImage = new Image("file:Game Icon/2048 game icon.jpg");
+        primaryStage.getIcons().add(iconImage);
         Controller controller = new Controller();
         controller.signUpMenu(primaryStage);
     }

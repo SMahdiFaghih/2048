@@ -2,6 +2,7 @@ package GraphicAndLogic;
 
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
+import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,6 +15,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,7 +35,7 @@ public class Controller
     private Group rootLoginMenu = new Group();
     private Scene sceneLoginMenu = new Scene(rootLoginMenu, 400, 400);
     private Group rootMainMenu = new Group();
-    private Scene sceneMainMenu = new Scene(rootMainMenu, 400, 420);
+    private Scene sceneMainMenu = new Scene(rootMainMenu, 400, 450);
     private Group rootChangeName = new Group();
     private Scene sceneChangeName = new Scene(rootChangeName, 300, 300);
     private Group rootChangeTable = new Group();
@@ -213,108 +216,69 @@ public class Controller
         rootMainMenu.getChildren().add(labelMainMenu);
         labelMainMenu.relocate(50, 0);
         labelMainMenu.setFont(Font.font(40));
-        labelMainMenu.setTextFill(Color.BLUE);
+        labelMainMenu.setTextFill(Color.BLACK);
 
-        Button buttonPlay = new Button("Play");
-        buttonPlay.setFont(Font.font(20));
-        buttonPlay.relocate(165, 60);
-        buttonPlay.setOnMouseClicked(new EventHandler<MouseEvent>()
+        setMainMenuText(primaryStage, "Play", 80);
+        setMainMenuText(primaryStage, "Set Game Table", 140);
+        setMainMenuText(primaryStage, "Change Name", 200);
+        setMainMenuText(primaryStage, "Ranking", 260);
+        setMainMenuText(primaryStage, "Logout", 320);
+        setMainMenuText(primaryStage, "Exit", 380);
+    }
+
+    private void setMainMenuText(Stage primaryStage, String text, int y)
+    {
+        Text mainMenuText = new Text(text);
+        mainMenuText.setTextOrigin(VPos.TOP);
+        mainMenuText.setFont(Font.font(null, FontWeight.SEMI_BOLD, 25));
+        mainMenuText.layoutXProperty().bind(sceneMainMenu.widthProperty().subtract(mainMenuText.prefWidth(-1)).divide(2));
+        mainMenuText.setY(y);
+        mainMenuText.setFill(Color.BLUE);
+        mainMenuText.setOnMouseEntered(event -> mainMenuText.setFill(Color.RED));
+        mainMenuText.setOnMouseExited(event -> mainMenuText.setFill(Color.BLUE));
+        mainMenuText.setOnMouseClicked(new EventHandler<MouseEvent>()
         {
             @Override
             public void handle(MouseEvent event)
             {
                 try
                 {
-                    GameStartingPrimarySettings(primaryStage);
+                    switch (text)
+                    {
+                        case "Play":
+                            GameStartingPrimarySettings(primaryStage);
+                            break;
+                        case "Set Game Table":
+                            primaryStage.setScene(sceneChangeTable);
+                            primaryStage.centerOnScreen();
+                            changeTable(primaryStage);
+                            break;
+                        case "Change Name":
+                            primaryStage.setScene(sceneChangeName);
+                            primaryStage.centerOnScreen();
+                            changeName(primaryStage);
+                            break;
+                        case "Ranking":
+                            primaryStage.setScene(sceneRanking);
+                            primaryStage.centerOnScreen();
+                            ranking(primaryStage);
+                            break;
+                        case "Logout":
+                            primaryStage.setScene(sceneLoginMenu);
+                            login(primaryStage);
+                            break;
+                        case "Exit":
+                            primaryStage.close();
+                            break;
+                    }
                 }
-                catch (Exception e)
+                catch (Exception ignored)
                 {
-                    e.printStackTrace();
+
                 }
             }
         });
-        rootMainMenu.getChildren().add(buttonPlay);
-
-        Button buttonSetGameTable = new Button("Set Game Table");
-        buttonSetGameTable.setFont(Font.font(20));
-        buttonSetGameTable.relocate(115, 120);
-        buttonSetGameTable.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent event)
-            {
-                try
-                {
-                    primaryStage.setScene(sceneChangeTable);
-                    primaryStage.centerOnScreen();
-                    changeTable(primaryStage);
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
-        rootMainMenu.getChildren().add(buttonSetGameTable);
-
-        Button buttonChangeName = new Button("Change name");
-        buttonChangeName.setFont(Font.font(20));
-        buttonChangeName.relocate(125, 180);
-        buttonChangeName.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent event)
-            {
-                primaryStage.setScene(sceneChangeName);
-                primaryStage.centerOnScreen();
-                try
-                {
-                    changeName(primaryStage);
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
-        rootMainMenu.getChildren().add(buttonChangeName);
-
-        Button buttonRanking = new Button("Ranking");
-        buttonRanking.setFont(Font.font(20));
-        buttonRanking.relocate(145, 240);
-        buttonRanking.setOnMouseClicked(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent event)
-            {
-                primaryStage.setScene(sceneRanking);
-                primaryStage.centerOnScreen();
-                try
-                {
-                    ranking(primaryStage);
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        });
-        rootMainMenu.getChildren().add(buttonRanking);
-
-        Button buttonLogOut = new Button("Logout");
-        buttonLogOut.setFont(Font.font(20));
-        buttonLogOut.relocate(150, 300);
-        buttonLogOut.setOnMouseClicked(event -> {
-            primaryStage.setScene(sceneLoginMenu);
-            login(primaryStage);
-        });
-        rootMainMenu.getChildren().add(buttonLogOut);
-
-        Button buttonExit = new Button("Exit");
-        buttonExit.setFont(Font.font(20));
-        buttonExit.relocate(165, 360);
-        buttonExit.setOnMouseClicked(event -> primaryStage.close());
-        rootMainMenu.getChildren().add(buttonExit);
+        rootMainMenu.getChildren().add(mainMenuText);
     }
 
     private void changeName(Stage primaryStage)
@@ -392,11 +356,13 @@ public class Controller
         labelColumn.setTextFill(Color.BLACK);
 
         TextField textFieldRow = new TextField();
+        textFieldRow.setPromptText("Number of Rows");
         HBox hBoxRow = new HBox(textFieldRow);
         hBoxRow.relocate(200, 120);
         rootChangeTable.getChildren().add(hBoxRow);
 
         TextField textFieldColumn = new TextField();
+        textFieldColumn.setPromptText("Number of Columns");
         HBox hBoxColumn = new HBox(textFieldColumn);
         hBoxColumn.relocate(200, 180);
         rootChangeTable.getChildren().add(hBoxColumn);
@@ -442,8 +408,9 @@ public class Controller
                 }
             }
         });
-        buttonApplyTableChange.setFont(Font.font(20));
-        buttonApplyTableChange.relocate(120, 300);
+        buttonApplyTableChange.setFont(Font.font(25));
+        buttonApplyTableChange.relocate(30, 300);
+        backButton(primaryStage, rootChangeTable, 280, 300);
         rootChangeTable.getChildren().add(buttonApplyTableChange);
     }
 

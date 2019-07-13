@@ -21,7 +21,7 @@ public class Player
         players.add(this);
     }
 
-    public void savePlayerInfo(Player player, String name, boolean isNewAccount) throws IOException
+    public static void savePlayerInfo(Player player, String name, boolean isNewAccount) throws IOException
     {
         FileWriter SavedAccountPath = new FileWriter("SavedAccounts/SavedAccountPath.txt" ,true);
         if (isNewAccount)
@@ -74,6 +74,16 @@ public class Player
             }
             return o1.getName().compareTo(o2.getName());
         });
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj instanceof Player)
+        {
+            return ((Player) obj).getName().equals(this.getName());
+        }
+        return false;
     }
 
     public static Player getLoggedInPlayer()

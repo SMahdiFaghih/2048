@@ -7,6 +7,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -50,8 +51,8 @@ public class Controller
         rootSignUpMenu.getChildren().clear();
 
         TextField textFieldName = new TextField();
-        TextField textFieldPassword = new TextField();
-        nameAndPasswordFields(rootSignUpMenu, textFieldName, textFieldPassword);
+        PasswordField passwordField = new PasswordField();
+        nameAndPasswordFields(rootSignUpMenu, textFieldName, passwordField);
 
         Label labelSignUp = new Label("Sign Up");
         rootSignUpMenu.getChildren().add(labelSignUp);
@@ -69,7 +70,7 @@ public class Controller
             {
                 rootSignUpMenu.getChildren().remove(labelInvalidInput);
                 String name = textFieldName.getText();
-                String password = textFieldPassword.getText();
+                String password = passwordField.getText();
                 if (name.isEmpty() || password.isEmpty())
                 {
                     rootSignUpMenu.getChildren().add(labelInvalidInput);
@@ -83,7 +84,7 @@ public class Controller
                     player = new Player(name, password);
                     try
                     {
-                        player.savePlayerInfo(player, name, true);
+                        Player.savePlayerInfo(player, name, true);
                     }
                     catch (IOException e)
                     {
@@ -135,8 +136,8 @@ public class Controller
         labelLogin.setTextFill(Color.BLACK);
 
         TextField textFieldName = new TextField();
-        TextField textFieldPassword = new TextField();
-        nameAndPasswordFields(rootLoginMenu, textFieldName, textFieldPassword);
+        PasswordField passwordField = new PasswordField();
+        nameAndPasswordFields(rootLoginMenu, textFieldName, passwordField);
 
         Button buttonLogin = new Button("Submit");
         Label labelInvalidInput = new Label();
@@ -148,7 +149,7 @@ public class Controller
             {
                 rootLoginMenu.getChildren().remove(labelInvalidInput);
                 String name = textFieldName.getText();
-                String password = textFieldPassword.getText();
+                String password = passwordField.getText();
                 if (name.isEmpty() || password.isEmpty())
                 {
                     labelInvalidInput.setText("you must Fill both TextFields");
@@ -621,7 +622,7 @@ public class Controller
         backButton(primaryStage, rootGameOver, 110, 200);
     }
 
-    public void nameAndPasswordFields(Group root, TextField textFieldName, TextField textFieldPassword)
+    public void nameAndPasswordFields(Group root, TextField textFieldName, PasswordField passwordField)
     {
         Label labelName = new Label("Name");
         root.getChildren().add(labelName);
@@ -629,6 +630,7 @@ public class Controller
         labelName.setFont(Font.font(15));
         labelName.setTextFill(Color.BLACK);
 
+        textFieldName.setPromptText("Username");
         HBox hBoxName = new HBox(textFieldName);
         hBoxName.relocate(115, 130);
         root.getChildren().add(hBoxName);
@@ -639,7 +641,8 @@ public class Controller
         labelPassword.setFont(Font.font(15));
         labelPassword.setTextFill(Color.BLACK);
 
-        HBox hBoxPassword = new HBox(textFieldPassword);
+        passwordField.setPromptText("Password");
+        HBox hBoxPassword = new HBox(passwordField);
         hBoxPassword.relocate(115, 210);
         root.getChildren().add(hBoxPassword);
     }

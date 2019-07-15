@@ -84,7 +84,7 @@ public class Controller
                     player = new Player(name, password);
                     try
                     {
-                        Player.savePlayerInfo(player, name, true);
+                        Player.savePlayerInfo(player, true);
                     }
                     catch (IOException e)
                     {
@@ -213,6 +213,8 @@ public class Controller
 
     public void mainMenu(Stage primaryStage) throws Exception
     {
+        rootMainMenu.getChildren().clear();
+
         Label labelMainMenu = new Label("Welcome to 2048");
         rootMainMenu.getChildren().add(labelMainMenu);
         labelMainMenu.relocate(50, 0);
@@ -284,6 +286,8 @@ public class Controller
 
     private void changeName(Stage primaryStage)
     {
+        rootChangeName.getChildren().clear();
+
         Label labelNewName = new Label("Enter new name");
         labelNewName.relocate(50, 30);
         labelNewName.setFont(Font.font(30));
@@ -338,6 +342,8 @@ public class Controller
 
     private void changeTable(Stage primaryStage) throws Exception
     {
+        rootChangeTable.getChildren().clear();
+
         Label labelChangeTable = new Label("Enter your desired number of rows and columns");
         rootChangeTable.getChildren().add(labelChangeTable);
         labelChangeTable.relocate(10, 30);
@@ -417,12 +423,15 @@ public class Controller
 
     public void ranking(Stage primaryStage) throws Exception
     {
-        Label labelTop10 = new Label("Top 10");
-        labelTop10.setTextFill(Color.YELLOW);
-        labelTop10.setFont(Font.font(30));
-        labelTop10.relocate(100, 0);
         rootRanking.getChildren().clear();
-        rootRanking.getChildren().add(labelTop10);
+
+        Text textTop10 = new Text("Top 10");
+        textTop10.setFill(Color.YELLOW);
+        textTop10.setFont(Font.font(30));
+        textTop10.layoutXProperty().bind(sceneRanking.widthProperty().subtract(textTop10.prefWidth(-1)).divide(2));
+        textTop10.setY(30);
+        rootRanking.getChildren().add(textTop10);
+
         Player.sortPlayers();
         showRankingPlayers();
         backButton(primaryStage, rootRanking, 100, 600);
@@ -446,6 +455,12 @@ public class Controller
             labelPlayerHighScore.setFont(Font.font(15));
             labelPlayerHighScore.relocate(250, counter * 50);
             rootRanking.getChildren().add(labelPlayerHighScore);
+
+            if (player.equals(Player.getLoggedInPlayer()))
+            {
+                labelPlayerName.setTextFill(Color.RED);
+                labelPlayerHighScore.setTextFill(Color.RED);
+            }
 
             counter ++;
         }

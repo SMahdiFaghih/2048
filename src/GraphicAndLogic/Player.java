@@ -21,11 +21,12 @@ public class Player
         players.add(this);
     }
 
-    public static void savePlayerInfo(Player player, String name, boolean isNewAccount) throws IOException
+    public static void savePlayerInfo(Player player, boolean isNewAccount) throws IOException
     {
-        FileWriter SavedAccountPath = new FileWriter("SavedAccounts/SavedAccountPath.txt" ,true);
+        String name = player.getName();
         if (isNewAccount)
         {
+            FileWriter SavedAccountPath = new FileWriter("SavedAccounts/SavedAccountPath.txt" ,true);
             SavedAccountPath.write(name + "\n");
             SavedAccountPath.close();
         }

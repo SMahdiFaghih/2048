@@ -17,8 +17,7 @@ public class Main extends Application
     public void start(Stage primaryStage) throws Exception
     {
         convertJSONToPlayers();
-        Image iconImage = new Image("file:Game Icon/2048 game icon.jpg");
-        primaryStage.getIcons().add(iconImage);
+        addIconImage(primaryStage);
         Controller controller = new Controller();
         controller.signUpMenu(primaryStage);
     }
@@ -26,6 +25,12 @@ public class Main extends Application
     public static void main(String[] args)
     {
         launch(args);
+    }
+
+    private void addIconImage(Stage primaryStage)
+    {
+        Image iconImage = new Image("file:Game Icon/2048 game icon.jpg");
+        primaryStage.getIcons().add(iconImage);
     }
 
     private void convertJSONToPlayers() throws Exception

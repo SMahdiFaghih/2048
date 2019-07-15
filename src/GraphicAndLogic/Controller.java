@@ -52,13 +52,14 @@ public class Controller
 
         TextField textFieldName = new TextField();
         PasswordField passwordField = new PasswordField();
-        nameAndPasswordFields(rootSignUpMenu, textFieldName, passwordField);
+        makeNameAndPasswordFields(rootSignUpMenu, textFieldName, passwordField);
 
-        Label labelSignUp = new Label("Sign Up");
-        rootSignUpMenu.getChildren().add(labelSignUp);
-        labelSignUp.setFont(Font.font(25));
-        labelSignUp.relocate(150, 30);
-        labelSignUp.setTextFill(Color.BLACK);
+        Text textSignUp = new Text("Sign Up");
+        textSignUp.setFont(Font.font(25));
+        textSignUp.setFill(Color.BLACK);
+        textSignUp.layoutXProperty().bind(sceneSignUpMenu.widthProperty().subtract(textSignUp.prefWidth(-1)).divide(2));
+        textSignUp.setY(50);
+        rootSignUpMenu.getChildren().add(textSignUp);
 
         Button buttonSignUp = new Button("Submit");
         Label labelInvalidInput = new Label();
@@ -129,15 +130,16 @@ public class Controller
     {
         rootLoginMenu.getChildren().clear();
 
-        Label labelLogin = new Label("Login");
-        rootLoginMenu.getChildren().add(labelLogin);
-        labelLogin.relocate(150, 30);
-        labelLogin.setFont(Font.font(25));
-        labelLogin.setTextFill(Color.BLACK);
+        Text textLogin = new Text("Login");
+        textLogin.setFill(Color.BLACK);
+        textLogin.setFont(Font.font(25));
+        textLogin.layoutXProperty().bind(sceneLoginMenu.widthProperty().subtract(textLogin.prefWidth(-1)).divide(2));
+        textLogin.setY(50);
+        rootLoginMenu.getChildren().add(textLogin);
 
         TextField textFieldName = new TextField();
         PasswordField passwordField = new PasswordField();
-        nameAndPasswordFields(rootLoginMenu, textFieldName, passwordField);
+        makeNameAndPasswordFields(rootLoginMenu, textFieldName, passwordField);
 
         Button buttonLogin = new Button("Submit");
         Label labelInvalidInput = new Label();
@@ -637,7 +639,7 @@ public class Controller
         backButton(primaryStage, rootGameOver, 110, 200);
     }
 
-    public void nameAndPasswordFields(Group root, TextField textFieldName, PasswordField passwordField)
+    public void makeNameAndPasswordFields(Group root, TextField textFieldName, PasswordField passwordField)
     {
         Label labelName = new Label("Name");
         root.getChildren().add(labelName);
@@ -647,7 +649,7 @@ public class Controller
 
         textFieldName.setPromptText("Username");
         HBox hBoxName = new HBox(textFieldName);
-        hBoxName.relocate(115, 130);
+        hBoxName.relocate(130, 130);
         root.getChildren().add(hBoxName);
 
         Label labelPassword = new Label("Password");
@@ -658,7 +660,7 @@ public class Controller
 
         passwordField.setPromptText("Password");
         HBox hBoxPassword = new HBox(passwordField);
-        hBoxPassword.relocate(115, 210);
+        hBoxPassword.relocate(130, 210);
         root.getChildren().add(hBoxPassword);
     }
 

@@ -36,7 +36,7 @@ public class Controller
     private Group rootLoginMenu = new Group();
     private Scene sceneLoginMenu = new Scene(rootLoginMenu, 400, 400);
     private Group rootMainMenu = new Group();
-    private Scene sceneMainMenu = new Scene(rootMainMenu, 400, 450);
+    private Scene sceneMainMenu = new Scene(rootMainMenu, 400, 450, Color.BURLYWOOD);
     private Group rootChangeName = new Group();
     private Scene sceneChangeName = new Scene(rootChangeName, 300, 300);
     private Group rootChangeTable = new Group();

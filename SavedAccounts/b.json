@@ -1,11 +1,11 @@
 {
-  "name": "a",
-  "password": "a",
-  "highScore": 124,
+  "name": "b",
+  "password": "b",
+  "highScore": 80,
   "game": {
     "tableRow": 4,
     "tableColumn": 4,
     "gameConditionChangedWithThisPress": true,
-    "score": 124
+    "score": 80
   }
 }

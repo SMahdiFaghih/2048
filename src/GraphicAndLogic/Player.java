@@ -12,6 +12,7 @@ public class Player
     private String name;
     private String password;
     private int highScore = 0;
+    private Game game;
     private static Player loggedInPlayer;
 
     public Player(String name, String password)
@@ -120,5 +121,15 @@ public class Player
     public String getPassword()
     {
         return password;
+    }
+
+    public Game getGame()
+    {
+        return game;
+    }
+
+    public void setGame(Game game)
+    {
+        this.game = game;
     }
 }

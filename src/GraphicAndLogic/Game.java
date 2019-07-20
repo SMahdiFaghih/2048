@@ -1,22 +1,33 @@
 package GraphicAndLogic;
 
+import javafx.scene.Group;
+import javafx.scene.Scene;
+
 import java.util.Random;
 
 public class Game
 {
-    private static Game currentGame;
+    private final static int SQUARE_SIDE_LENGTH = Main.getSquareSideLength();
+    private final static int BLANK_IN_ROWS = Main.getBlankInRows();
+    private final static int BLANK_IN_COLUMNS = Main.getBlankInColumns();
+    private final static int SCORE_SHOWING_SPACE = Main.getScoreShowingSpace();
+
     private static int defaultTableRow = 4;
     private static int defaultTableColumn = 4;
     private int tableRow = defaultTableRow;
     private int tableColumn = defaultTableColumn;
-    private Cell[][] gameTable = new Cell[tableRow][tableColumn];
-    private Random random = new Random();
+    private transient Cell[][] gameTable = new Cell[tableRow][tableColumn];
+    private transient Random random = new Random();
     private boolean gameConditionChangedWithThisPress = false;
     private int score;
+    private transient Group rootGameGraphics;
+    private transient Scene sceneInsideTheGame;
 
-    public Game()
+    public Game(Player player)
     {
-        Game.setCurrentGame(this);
+        player.setGame(this);
+        setRootGameGraphics(new Group());
+        setSceneInsideTheGame(new Scene(rootGameGraphics, this.getTableRow() * SQUARE_SIDE_LENGTH + 2 * BLANK_IN_ROWS + SCORE_SHOWING_SPACE, this.getTableColumn() * SQUARE_SIDE_LENGTH + 2 * BLANK_IN_COLUMNS));
     }
 
     public static void changeDefaultTable(int row, int column)
@@ -342,16 +353,6 @@ public class Game
         return true;
     }
 
-    public static Game getCurrentGame()
-    {
-        return currentGame;
-    }
-
-    public static void setCurrentGame(Game currentGame)
-    {
-        Game.currentGame = currentGame;
-    }
-
     public int getTableRow()
     {
         return tableRow;
@@ -385,5 +386,25 @@ public class Game
     public void increaseScore(int score)
     {
         this.score += score;
+    }
+
+    public Group getRootGameGraphics()
+    {
+        return rootGameGraphics;
+    }
+
+    public void setRootGameGraphics(Group rootGameGraphics)
+    {
+        this.rootGameGraphics = rootGameGraphics;
+    }
+
+    public Scene getSceneInsideTheGame()
+    {
+        return sceneInsideTheGame;
+    }
+
+    public void setSceneInsideTheGame(Scene sceneInsideTheGame)
+    {
+        this.sceneInsideTheGame = sceneInsideTheGame;
     }
 }

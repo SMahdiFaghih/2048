@@ -26,10 +26,10 @@ import java.util.ArrayList;
 
 public class Controller
 {
-    private final static int SQUARE_SIDE_LENGTH = 80;
-    private final static int BLANK_IN_ROWS = 50;
-    private final static int BLANK_IN_COLUMNS = 50;
-    private final static int SCORE__SHOWING_SPACE = 200;
+    private final static int SQUARE_SIDE_LENGTH = Main.getSquareSideLength();
+    private final static int BLANK_IN_ROWS = Main.getBlankInRows();
+    private final static int BLANK_IN_COLUMNS = Main.getBlankInColumns();
+    private final static int SCORE_SHOWING_SPACE = Main.getScoreShowingSpace();
 
     private Group rootSignUpMenu = new Group();
     private Scene sceneSignUpMenu = new Scene(rootSignUpMenu, 400, 400);
@@ -167,7 +167,6 @@ public class Controller
                 else if (player.getPassword().equals(password))
                 {
                     Player.login(player);
-                    new Game();
                     rootSignUpMenu.getChildren().remove(labelInvalidInput);
                     primaryStage.setScene(sceneMainMenu);
                     primaryStage.centerOnScreen();
@@ -470,17 +469,26 @@ public class Controller
 
     private void GameStartingPrimarySettings(Stage primaryStage) throws Exception
     {
-        Game game = new Game();
-        Group rootGameGraphics = new Group();
-        Scene sceneInsideTheGame = new Scene(rootGameGraphics, game.getTableRow() * SQUARE_SIDE_LENGTH + 2 * BLANK_IN_ROWS + SCORE__SHOWING_SPACE, game.getTableColumn() * SQUARE_SIDE_LENGTH + 2 * BLANK_IN_COLUMNS);
-        primaryStage.setScene(sceneInsideTheGame);
-        primaryStage.centerOnScreen();
-        gameGraphics(primaryStage, rootGameGraphics);
+        Game game = Player.getLoggedInPlayer().getGame();
+        if (game != null)
+        {
+            Scene sceneInsideTheGame = game.getSceneInsideTheGame();
+            Group rootGameGraphics = game.getRootGameGraphics();
+            primaryStage.setScene(sceneInsideTheGame);
+            primaryStage.centerOnScreen();
+            insideTheGame(primaryStage, rootGameGraphics, game);
+        }
+        else
+        {
+            game = new Game(Player.getLoggedInPlayer());
+            primaryStage.setScene(game.getSceneInsideTheGame());
+            primaryStage.centerOnScreen();
+            gameGraphics(primaryStage, game.getRootGameGraphics(), game);
+        }
     }
 
-    private void gameGraphics(Stage primaryStage, Group rootGameGraphics) throws Exception
+    private void gameGraphics(Stage primaryStage, Group rootGameGraphics, Game game) throws Exception
     {
-        Game game = Game.getCurrentGame();
         for (int i=0;i < game.getTableRow();i++)
         {
             for (int j=0;j < game.getTableColumn();j++)
@@ -533,9 +541,10 @@ public class Controller
             {
                 try
                 {
-                    rootGameGraphics.getChildren().clear();
+                    Player.savePlayerInfo(Player.getLoggedInPlayer(), false);
                     primaryStage.setScene(sceneMainMenu);
                     primaryStage.centerOnScreen();
+                    mainMenu(primaryStage);
                 }
                 catch (Exception e)
                 {
@@ -547,24 +556,23 @@ public class Controller
 
         for (int i=0;i < 2;i++)
         {
-            Game.getCurrentGame().putRandomCell();
+            game.putRandomCell();
         }
-        insideTheGame(primaryStage, rootGameGraphics);
+        insideTheGame(primaryStage, rootGameGraphics, game);
     }
 
-    private void insideTheGame(Stage primaryStage, Group rootGameGraphics)
+    private void insideTheGame(Stage primaryStage, Group rootGameGraphics, Game game)
     {
         Label highScore = new Label();
-        highScore.relocate(Game.getCurrentGame().getTableRow() * SQUARE_SIDE_LENGTH + BLANK_IN_ROWS + 90, 190);
+        highScore.relocate(game.getTableRow() * SQUARE_SIDE_LENGTH + BLANK_IN_ROWS + 90, 190);
         rootGameGraphics.getChildren().add(highScore);
 
         Label score = new Label();
-        score.relocate(Game.getCurrentGame().getTableRow() * SQUARE_SIDE_LENGTH + BLANK_IN_ROWS + 90, 290);
+        score.relocate(game.getTableRow() * SQUARE_SIDE_LENGTH + BLANK_IN_ROWS + 90, 290);
         rootGameGraphics.getChildren().add(score);
 
-        Scene sceneInsideTheGame = primaryStage.getScene();
         ArrayList<String> input = new ArrayList<>();
-        sceneInsideTheGame.setOnKeyPressed(new EventHandler<KeyEvent>()
+        game.getSceneInsideTheGame().setOnKeyPressed(new EventHandler<KeyEvent>()
         {
             @Override
             public void handle(KeyEvent event)
@@ -581,7 +589,7 @@ public class Controller
             @Override
             public void handle(long now)
             {
-                if (Game.getCurrentGame().isGameEnded())
+                if (game.isGameEnded())
                 {
                     this.stop();
                     try
@@ -594,34 +602,36 @@ public class Controller
                     }
                     primaryStage.setScene(sceneGameOver);
                     primaryStage.centerOnScreen();
-                    gameOver(primaryStage);
+                    gameOver(game, primaryStage);
                 }
                 if (input.contains("UP"))
                 {
-                    Game.getCurrentGame().gameLogicUpArrow();
+                    game.gameLogicUpArrow();
                 }
                 if (input.contains("RIGHT"))
                 {
-                    Game.getCurrentGame().gameLogicRightArrow();
+                    game.gameLogicRightArrow();
                 }
                 if (input.contains("DOWN"))
                 {
-                    Game.getCurrentGame().gameLogicDownArrow();
+                    game.gameLogicDownArrow();
                 }
                 if (input.contains("LEFT"))
                 {
-                    Game.getCurrentGame().gameLogicLeftArrow();
+                    game.gameLogicLeftArrow();
                 }
                 input.clear();
                 highScore.setText(Integer.toString(Player.getLoggedInPlayer().getHighScore()));
-                score.setText(Integer.toString(Game.getCurrentGame().getScore()));
+                score.setText(Integer.toString(game.getScore()));
             }
         };
         animationTimer.start();
     }
 
-    public void gameOver(Stage primaryStage)
+    public void gameOver(Game game, Stage primaryStage)
     {
+        Player.getLoggedInPlayer().setGame(null);
+
         rootGameOver.getChildren().clear();
 
         Label labelGameOver = new Label("Game Over");
@@ -630,7 +640,7 @@ public class Controller
         labelGameOver.relocate(50, 25);
         rootGameOver.getChildren().add(labelGameOver);
 
-        Label labelFinalScore = new Label("your Score : " + Game.getCurrentGame().getScore());
+        Label labelFinalScore = new Label("your Score : " + game.getScore());
         labelFinalScore.setFont(Font.font(20));
         labelFinalScore.setTextFill(Color.GREEN);
         labelFinalScore.relocate(75, 120);

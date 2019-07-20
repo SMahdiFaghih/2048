@@ -13,6 +13,11 @@ import java.util.Scanner;
 
 public class Main extends Application
 {
+    private final static int SQUARE_SIDE_LENGTH = 80;
+    private final static int BLANK_IN_ROWS = 50;
+    private final static int BLANK_IN_COLUMNS = 50;
+    private final static int SCORE_SHOWING_SPACE = 200;
+
     @Override
     public void start(Stage primaryStage) throws Exception
     {
@@ -47,5 +52,25 @@ public class Main extends Application
             System.out.println(obj);
             Player.getPlayers().add(new Gson().fromJson(obj.toString(), Player.class));
         }
+    }
+
+    public static int getSquareSideLength()
+    {
+        return SQUARE_SIDE_LENGTH;
+    }
+
+    public static int getBlankInRows()
+    {
+        return BLANK_IN_ROWS;
+    }
+
+    public static int getBlankInColumns()
+    {
+        return BLANK_IN_COLUMNS;
+    }
+
+    public static int getScoreShowingSpace()
+    {
+        return SCORE_SHOWING_SPACE;
     }
 }

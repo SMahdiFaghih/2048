@@ -16,12 +16,12 @@ public class Game
     private static int defaultTableColumn = 4;
     private int tableRow = defaultTableRow;
     private int tableColumn = defaultTableColumn;
-    private transient Cell[][] gameTable = new Cell[tableRow][tableColumn];
-    private transient Random random = new Random();
+    private Cell[][] gameTable = new Cell[tableRow][tableColumn];
+    private Random random = new Random();
     private boolean gameConditionChangedWithThisPress = false;
     private int score;
-    private transient Group rootGameGraphics;
-    private transient Scene sceneInsideTheGame;
+    private Group rootGameGraphics;
+    private Scene sceneInsideTheGame;
 
     public Game(Player player)
     {

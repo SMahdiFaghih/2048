@@ -1,11 +1,5 @@
 {
   "name": "a",
   "password": "a",
-  "highScore": 124,
-  "game": {
-    "tableRow": 4,
-    "tableColumn": 4,
-    "gameConditionChangedWithThisPress": true,
-    "score": 124
-  }
+  "highScore": 132
 }

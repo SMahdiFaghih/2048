@@ -12,7 +12,7 @@ public class Player
     private String name;
     private String password;
     private int highScore = 0;
-    private Game game;
+    private transient Game game;
     private static Player loggedInPlayer;
 
     public Player(String name, String password)

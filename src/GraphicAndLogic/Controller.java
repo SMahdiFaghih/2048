@@ -329,7 +329,13 @@ public class Controller
                     rootChangeName.getChildren().add(labelInputConditionCommand);
                     return;
                 }
-                Player.getLoggedInPlayer().setName(newName);
+                try
+                {
+                    Player.getLoggedInPlayer().changeName(newName);
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
                 labelInputConditionCommand.setText("Name changed successfully");
                 labelInputConditionCommand.setTextFill(Color.GREEN);
                 labelInputConditionCommand.relocate(30, 80);

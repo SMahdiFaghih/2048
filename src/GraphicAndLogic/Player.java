@@ -35,7 +35,6 @@ public class Player
         System.out.println(json);
         try
         {
-
             FileWriter saveAccountInfo = new FileWriter("SavedAccounts/" + name + ".json", false);
             saveAccountInfo.write(json);
             saveAccountInfo.close();
@@ -62,6 +61,13 @@ public class Player
         }
         return null;
     }
+
+    public void changeName(String newName) throws IOException
+    {
+        this.name = newName;
+        savePlayerInfo(this, true);
+    }
+
 
     public static void sortPlayers()
     {
@@ -111,11 +117,6 @@ public class Player
     public String getName()
     {
         return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
     }
 
     public String getPassword()

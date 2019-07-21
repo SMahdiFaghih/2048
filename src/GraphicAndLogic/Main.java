@@ -3,9 +3,12 @@ package GraphicAndLogic;
 import com.google.gson.Gson;
 import javafx.application.Application;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import org.json.simple.parser.JSONParser;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.InputStream;
@@ -23,6 +26,10 @@ public class Main extends Application
     {
         convertJSONToPlayers();
         addIconImage(primaryStage);
+        Media sound = new Media(new File("Music/Light High Classical Piano Music Theme Production Music Royalty-Free Stock Audio - Storyblocks Audio.mp3").toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.setCycleCount(-1);
+        mediaPlayer.play();
         Controller controller = new Controller();
         controller.signUpMenu(primaryStage);
     }

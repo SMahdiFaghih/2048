@@ -390,6 +390,7 @@ public class Controller
                     if (numOfRows > 3 && numOfRows < 7 && numOfColumns > 3 && numOfColumns < 7)
                     {
                         Game.changeDefaultTable(numOfRows, numOfColumns);
+                        Player.getLoggedInPlayer().setGame(null);
                         primaryStage.setScene(sceneMainMenu);
                         mainMenu(primaryStage);
                     }

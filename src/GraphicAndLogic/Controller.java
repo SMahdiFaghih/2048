@@ -269,6 +269,7 @@ public class Controller
                             break;
                         case "Logout":
                             primaryStage.setScene(sceneLoginMenu);
+                            primaryStage.centerOnScreen();
                             login(primaryStage);
                             break;
                         case "Exit":

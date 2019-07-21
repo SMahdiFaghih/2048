@@ -57,6 +57,9 @@ public class Cell
             case 2048:
                 getSquare().setFill(Color.GOLD);
                 break;
+            default:
+                getSquare().setFill(Color.GRAY);
+                break;
         }
         getSquare().setStroke(Color.BLACK);
     }

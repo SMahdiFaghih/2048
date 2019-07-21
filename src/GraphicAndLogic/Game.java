@@ -314,20 +314,6 @@ public class Game
             {
                 if (getGameTable()[i][j].isCellEmpty())
                 {
-                    continue;
-                }
-                if (Integer.parseInt(getGameTable()[i][j].getNumber().getText()) == 2048)
-                {
-                    return true;
-                }
-            }
-        }
-        for (int i=0;i < getTableRow();i++)
-        {
-            for (int j=0;j < getTableColumn();j++)
-            {
-                if (getGameTable()[i][j].isCellEmpty())
-                {
                     return false;
                 }
             }

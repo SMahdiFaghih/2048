@@ -2,8 +2,9 @@ package GraphicAndLogic;
 
 import com.google.gson.GsonBuilder;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Player
@@ -64,8 +65,34 @@ public class Player
 
     public void changeName(String newName) throws IOException
     {
+        makeNewNamedAccountJson();
         this.name = newName;
         savePlayerInfo(this, true);
+    }
+
+    private void makeNewNamedAccountJson() throws IOException
+    {
+        Files.deleteIfExists(Paths.get("SavedAccounts/" + this.getName() + ".json"));
+        BufferedReader previousSavedAccountPath = new BufferedReader(new FileReader("SavedAccounts/SavedAccountPath.txt"));
+        FileWriter newSavedAccountPath = new FileWriter("SavedAccounts/NewSavedAccountPath.txt" ,true);
+        while (true)
+        {
+            String line = previousSavedAccountPath.readLine();
+            if(line == null)
+            {
+                break;
+            }
+            if (line.equals(this.getName()))
+            {
+                continue;
+            }
+            newSavedAccountPath.write(line + "\n");
+        }
+        previousSavedAccountPath.close();
+        newSavedAccountPath.close();
+        Files.deleteIfExists(Paths.get("SavedAccounts/SavedAccountPath.txt"));
+        File file = new File("SavedAccounts/NewSavedAccountPath.txt");
+        file.renameTo(new File("SavedAccounts/SavedAccountPath.txt"));
     }
 
 

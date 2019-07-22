@@ -49,6 +49,7 @@ public class Player
     public static void login(Player player)
     {
         Player.loggedInPlayer = player;
+        Game.changeDefaultTable(4, 4);
     }
 
     public static Player findPlayer(String name)
@@ -65,12 +66,12 @@ public class Player
 
     public void changeName(String newName) throws IOException
     {
-        makeNewNamedAccountJson();
+        deleteAccountJson();
         this.name = newName;
         savePlayerInfo(this, true);
     }
 
-    private void makeNewNamedAccountJson() throws IOException
+    private void deleteAccountJson() throws IOException
     {
         Files.deleteIfExists(Paths.get("SavedAccounts/" + this.getName() + ".json"));
         BufferedReader previousSavedAccountPath = new BufferedReader(new FileReader("SavedAccounts/SavedAccountPath.txt"));

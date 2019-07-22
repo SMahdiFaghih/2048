@@ -2,7 +2,6 @@ package GraphicAndLogic;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-
 import java.util.Random;
 
 public class Game

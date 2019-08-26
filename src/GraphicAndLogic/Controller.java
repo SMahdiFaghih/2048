@@ -209,11 +209,12 @@ public class Controller
     {
         rootMainMenu.getChildren().clear();
 
-        Label labelMainMenu = new Label("Welcome to 2048");
-        rootMainMenu.getChildren().add(labelMainMenu);
-        labelMainMenu.relocate(50, 0);
-        labelMainMenu.setFont(Font.font(40));
-        labelMainMenu.setTextFill(Color.BLACK);
+        Text textMainMenu = new Text("Welcome to 2048");
+        textMainMenu.setFill(Color.BLACK);
+        textMainMenu.setFont(Font.font(40));
+        textMainMenu.layoutXProperty().bind(sceneMainMenu.widthProperty().subtract(textMainMenu.prefWidth(-1)).divide(2));
+        textMainMenu.setY(50);
+        rootMainMenu.getChildren().add(textMainMenu);
 
         setMainMenuText(primaryStage, "Play", 80);
         setMainMenuText(primaryStage, "Set Game Table", 140);

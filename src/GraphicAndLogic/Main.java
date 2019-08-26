@@ -32,6 +32,8 @@ public class Main extends Application
         mediaPlayer.play();
         Controller controller = new Controller();
         controller.signUpMenu(primaryStage);
+        primaryStage.setTitle("2048");
+        primaryStage.show();
     }
 
     public static void main(String[] args)
